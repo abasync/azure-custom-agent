@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  abasync-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: azure-agent
+    restart: unless-stopped
+    env_file:
+      - stack.env
+networks:
+  default:
+    external: true
+    name: kroo-dev

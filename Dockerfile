@@ -7,7 +7,7 @@ ENV TARGETARCH="linux-musl-x64"
 
 RUN apk update
 RUN apk upgrade
-RUN apk add bash curl git icu-libs jq aws-cli
+RUN apk add bash curl git icu-libs jq aws-cli nodejs npm
 
 WORKDIR /azp/
 

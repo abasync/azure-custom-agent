@@ -1,20 +1,21 @@
-FROM ubuntu:22.04
-ENV TARGETARCH="linux-x64"
-# Also can be "linux-arm", "linux-arm64".
+FROM alpine
+ENV TARGETARCH="linux-musl-x64"
 
-RUN apt update
-RUN apt upgrade -y
-RUN apt install -y curl git jq libicu70 aws docker
+# Another option:
+# FROM arm64v8/alpine
+# ENV TARGETARCH="linux-musl-arm64"
+
+RUN apk update
+RUN apk upgrade
+RUN apk add bash curl git icu-libs jq awscli docker
 
 WORKDIR /azp/
 
 COPY ./start.sh ./
 RUN chmod +x ./start.sh
 
-# Create agent user and set up home directory
-RUN useradd -m -d /home/agent agent
-RUN chown -R agent:agent /azp /home/agent
-
+RUN adduser -D agent
+RUN chown agent ./
 USER agent
 # Another option is to run the agent as root.
 # ENV AGENT_ALLOW_RUNASROOT="true"

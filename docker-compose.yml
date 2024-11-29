@@ -5,7 +5,10 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: azure-agent
+    privileged: true
     restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     env_file:
       - stack.env
 networks:

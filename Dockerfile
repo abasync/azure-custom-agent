@@ -4,7 +4,12 @@ ENV TARGETARCH="linux-x64"
 
 RUN apt update
 RUN apt upgrade -y
-RUN apt install -y curl git jq libicu70 aws-cli
+RUN apt install -y curl git jq libicu70 unzip
+
+RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip \
+  && unzip awscliv2.zip \
+  && ./aws/install \
+  && rm -rf aws awscliv2.zip
 
 WORKDIR /azp/
 

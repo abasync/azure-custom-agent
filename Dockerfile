@@ -1,4 +1,4 @@
-FROM alpine
+FROM docker:27-dind
 ENV TARGETARCH="linux-musl-x64"
 
 # Another option:
@@ -7,9 +7,7 @@ ENV TARGETARCH="linux-musl-x64"
 
 RUN apk update
 RUN apk upgrade
-RUN apk add bash curl git icu-libs jq aws-cli docker openrc
-
-RUN rc-update add docker default
+RUN apk add bash curl git icu-libs jq aws-cli
 
 WORKDIR /azp/
 

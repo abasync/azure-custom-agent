@@ -9,6 +9,8 @@ RUN apk update
 RUN apk upgrade
 RUN apk add bash curl git icu-libs jq aws-cli docker
 
+RUN rc-update add docker default
+
 WORKDIR /azp/
 
 COPY ./start.sh ./

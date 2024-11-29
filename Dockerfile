@@ -7,7 +7,7 @@ ENV TARGETARCH="linux-musl-x64"
 
 RUN apk update
 RUN apk upgrade
-RUN apk add bash curl git icu-libs jq awscli docker
+RUN apk add bash curl git icu-libs jq aws-cli docker
 
 WORKDIR /azp/
 

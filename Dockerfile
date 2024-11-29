@@ -1,21 +1,20 @@
-FROM docker:27-dind
-ENV TARGETARCH="linux-musl-x64"
+FROM ubuntu:22.04
+ENV TARGETARCH="linux-x64"
+# Also can be "linux-arm", "linux-arm64".
 
-# Another option:
-# FROM arm64v8/alpine
-# ENV TARGETARCH="linux-musl-arm64"
-
-RUN apk update
-RUN apk upgrade
-RUN apk add bash curl git icu-libs jq aws-cli
+RUN apt update
+RUN apt upgrade -y
+RUN apt install -y curl git jq libicu70 aws-cli
 
 WORKDIR /azp/
 
 COPY ./start.sh ./
 RUN chmod +x ./start.sh
 
-RUN adduser -D agent
-RUN chown agent ./
+# Create agent user and set up home directory
+RUN useradd -m -d /home/agent agent
+RUN chown -R agent:agent /azp /home/agent
+
 USER agent
 # Another option is to run the agent as root.
 # ENV AGENT_ALLOW_RUNASROOT="true"

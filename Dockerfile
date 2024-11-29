@@ -1,27 +1,23 @@
-FROM ubuntu:22.04
-ENV TARGETARCH="linux-x64"
-# Also can be "linux-arm", "linux-arm64".
+FROM docker:27-dind
+ENV TARGETARCH="linux-musl-x64"
 
-RUN apt update
-RUN apt upgrade -y
-RUN apt install -y curl git jq libicu70 unzip
+# Another option:
+# FROM arm64v8/alpine
+# ENV TARGETARCH="linux-musl-arm64"
 
-RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip \
-  && unzip awscliv2.zip \
-  && ./aws/install \
-  && rm -rf aws awscliv2.zip
+RUN apk update
+RUN apk upgrade
+RUN apk add bash curl git icu-libs jq aws-cli
 
 WORKDIR /azp/
 
 COPY ./start.sh ./
 RUN chmod +x ./start.sh
 
-# Create agent user and set up home directory
-RUN useradd -m -d /home/agent agent
-RUN chown -R agent:agent /azp /home/agent
-
+RUN adduser -D agent
+RUN chown agent ./
 USER agent
 # Another option is to run the agent as root.
-# ENV AGENT_ALLOW_RUNASROOT="true"
+ENV AGENT_ALLOW_RUNASROOT="true"
 
 ENTRYPOINT [ "./start.sh" ]

@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  abasync-api:
+  azure-custom-agent:
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     env_file:
       - stack.env
-networks:
-  default:
-    external: true
-    name: kroo-dev
+# networks:
+  # default:
+    # external: true
+    # name: kroo-dev

@@ -16,7 +16,14 @@ RUN chmod +x ./start.sh
 
 RUN adduser -D agent
 RUN chown agent ./
+
 USER agent
+
+RUN mkdir -p ~/.npm-global/lib
+RUN npm config set prefix '~/.npm-global'
+ENV PATH=/home/agent/.npm-global/bin:$PATH
+ENV NPM_CONFIG_PREFIX=~/.npm-global
+
 # Another option is to run the agent as root.
 ENV AGENT_ALLOW_RUNASROOT="true"
 

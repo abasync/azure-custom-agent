@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   azure-custom-agent:
     build:
